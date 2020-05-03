@@ -1,0 +1,2 @@
+C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Builds\VisualStudio2019\x64\Debug\Standalone Plugin\NewVSTProject.exe
+C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Builds\VisualStudio2019\x64\Debug\Standalone Plugin\NewVSTProject.pdb

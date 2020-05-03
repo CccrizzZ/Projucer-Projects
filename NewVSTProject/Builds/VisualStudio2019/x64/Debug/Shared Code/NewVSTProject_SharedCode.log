@@ -1,0 +1,2 @@
+﻿  PluginEditor.cpp
+C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginEditor.cpp(71,45): error C2440: '=': cannot convert from 'double' to 'juce::AudioParameterFloat *'
