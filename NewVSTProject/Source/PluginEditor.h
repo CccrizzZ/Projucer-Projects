@@ -35,6 +35,10 @@ private:
     NewVstprojectAudioProcessor& processor;
 
     Slider gainSlider;
+    Label gainLable;
+
+
+    float gainAMT;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewVstprojectAudioProcessorEditor)
 };

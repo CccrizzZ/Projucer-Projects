@@ -5,11 +5,11 @@
     <GROUP id="{430A9627-38BF-9C4E-51D9-D987B127794D}" name="Source">
       <FILE id="FHHeqM" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="nrQAtk" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="nrQAtk" name="PluginProcessor.h" compile="1" resource="0"
             file="Source/PluginProcessor.h"/>
       <FILE id="n1Lrs3" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="cryE2g" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="cryE2g" name="PluginEditor.h" compile="1" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
@@ -54,7 +54,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <WINDOWS/>
+    <WINDOWS buildEnabled="1"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

@@ -57,8 +57,9 @@ public:
 
 
     // gain
-    AudioParameterFloat* gain;
-    float gainFloat;
+    AudioParameterFloat *gain;
+    
+
 private:
     //==============================================================================
     

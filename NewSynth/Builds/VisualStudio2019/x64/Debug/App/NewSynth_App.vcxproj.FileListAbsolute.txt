@@ -1,0 +1,2 @@
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Builds\VisualStudio2019\x64\Debug\App\NewSynth.exe
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Builds\VisualStudio2019\x64\Debug\App\NewSynth.pdb

@@ -15,13 +15,13 @@
 NewVstprojectAudioProcessor::NewVstprojectAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", AudioChannelSet::stereo(), true)
-                     #endif
-                       )
+    #if ! JucePlugin_IsMidiEffect
+    #if ! JucePlugin_IsSynth
+    .withInput  ("Input",  AudioChannelSet::stereo(), true)
+    #endif
+    .withOutput ("Output", AudioChannelSet::stereo(), true)
+    #endif
+    )
 #endif
 {
 
@@ -142,7 +142,6 @@ void NewVstprojectAudioProcessor::processBlock (AudioBuffer<float>& buffer, Midi
 {
     // gain
     buffer.applyGain(*gain);
-
 
 
     ScopedNoDenormals noDenormals;

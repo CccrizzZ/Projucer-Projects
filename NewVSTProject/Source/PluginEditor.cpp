@@ -27,11 +27,19 @@ NewVstprojectAudioProcessorEditor::NewVstprojectAudioProcessorEditor (NewVstproj
     gainSlider.setPopupDisplayEnabled(false, false, this);
     //gainSlider.setTextValueSuffix("Gain ");
     gainSlider.setValue(0.5);
+    gainSlider.setColour(Slider::ColourIds::textBoxTextColourId, Colours::white);
+    gainSlider.setColour(Slider::ColourIds::trackColourId, Colours::limegreen);
 
-    gainSlider.setColour(Slider::ColourIds::backgroundColourId, Colours::gold);
+    
+    gainSlider.addListener(this);
     addAndMakeVisible(&gainSlider);
 
 
+
+    // lable for gain
+    gainLable.setText("Gain", dontSendNotification);
+    gainLable.attachToComponent(&gainSlider, true);
+    addAndMakeVisible(gainLable);
 
 
 
@@ -48,11 +56,13 @@ NewVstprojectAudioProcessorEditor::~NewVstprojectAudioProcessorEditor()
 void NewVstprojectAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (ResizableWindow::backgroundColourId));
+    g.fillAll (Colours::black);
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
-    g.drawFittedText("Volume Gain: ", 10, 30, getWidth(), 30, Justification::left, 1);
+
+    gainAMT = gainSlider.getValue();
+    g.drawFittedText((String)(gainAMT), 10, 40, getWidth(), 30, Justification::left, 1);
 
 
 }
@@ -68,5 +78,11 @@ void NewVstprojectAudioProcessorEditor::resized()
 
 void NewVstprojectAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    processor.gain = (gainSlider.getValue());
+    if (slider == &gainSlider)
+    {
+        *(processor.gain) = gainSlider.getValue();
+        gainAMT = 0;
+
+    }
+
 }
