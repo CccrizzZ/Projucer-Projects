@@ -1,8 +1,5 @@
 ﻿  MainComponent.cpp
-  Main.cpp
-C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\MainComponent.cpp(103,18): warning C4458: declaration of 'level' hides class member
-C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\MainComponent.h(39,11): message : see declaration of 'MainComponent::level' (compiling source file ..\..\Source\MainComponent.cpp)
-C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\MainComponent.cpp(116,10): warning C4189: 'FreqLevel': local variable is initialized but not referenced
-C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\Main.cpp(26,36): warning C4100: 'commandLine': unreferenced formal parameter
-C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\Main.cpp(48,48): warning C4100: 'commandLine': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(56,27): warning C4100: 'newPitchWheelValue': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(58,49): warning C4100: 'newControllerValue': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(58,27): warning C4100: 'controllerNumber': unreferenced formal parameter
   NewSynth_App.vcxproj -> C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Builds\VisualStudio2019\x64\Debug\App\NewSynth.exe

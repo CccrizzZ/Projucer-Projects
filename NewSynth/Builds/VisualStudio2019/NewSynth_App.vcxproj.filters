@@ -2328,6 +2328,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\SineWaveSound.h">
+      <Filter>NewSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SineWaveVoice.h">
+      <Filter>NewSynth\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\SynthAudioSource.h">
+      <Filter>NewSynth\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>NewSynth\Source</Filter>
     </ClInclude>

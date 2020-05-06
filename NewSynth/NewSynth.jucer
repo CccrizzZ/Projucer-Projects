@@ -3,7 +3,11 @@
 <JUCERPROJECT id="h2ZH5p" name="NewSynth" projectType="guiapp" jucerVersion="5.4.7">
   <MAINGROUP id="yVRvEZ" name="NewSynth">
     <GROUP id="{4A0221D9-27DF-1115-7221-AE678524C505}" name="Source">
-      <FILE id="tuS2xV" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="t0ADVi" name="SineWaveSound.h" compile="1" resource="0" file="Source/SineWaveSound.h"/>
+      <FILE id="HmuZXG" name="SineWaveVoice.h" compile="1" resource="0" file="Source/SineWaveVoice.h"/>
+      <FILE id="XdPkcP" name="SynthAudioSource.h" compile="1" resource="0"
+            file="Source/SynthAudioSource.h"/>
+      <FILE id="tuS2xV" name="MainComponent.h" compile="1" resource="0" file="Source/MainComponent.h"/>
       <FILE id="Si853A" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="xfH2jB" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>

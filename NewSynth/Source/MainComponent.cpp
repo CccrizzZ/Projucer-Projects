@@ -9,11 +9,13 @@
 #include "MainComponent.h"
 
 //==============================================================================
-MainComponent::MainComponent()
+MainComponent::MainComponent() :
+    sAudioSource(keyboardState),
+    Keyboard1(keyboardState, MidiKeyboardComponent::horizontalKeyboard)
 {
     // Make sure you set the size of the component after
     // you add any child components.
-    setSize (800, 300);
+
 
     // Some platforms require permissions to open input channels so request that here
     if (RuntimePermissions::isRequired (RuntimePermissions::recordAudio)
@@ -25,28 +27,34 @@ MainComponent::MainComponent()
     else
     {
         // Specify the number of input and output channels that we want to open
-        setAudioChannels (2, 2);
+        setAudioChannels (0, 2);
     }
 
+    setSize(800, 600);
+
+    startTimer(400);
+
+    // Volume slider and label
     VolumeSlider.setSliderStyle(Slider::LinearBar);
     VolumeSlider.setRange(Range<double>(0.0, 1.0), 0.01);
     VolumeSlider.setColour(Slider::ColourIds::trackColourId, Colours::limegreen);
     VolumeSlider.setColour(Slider::ColourIds::textBoxOutlineColourId, Colours::limegreen);
-
     addAndMakeVisible(VolumeSlider);
-
 
     volumeLabel.setText("Volume: ", dontSendNotification);
     volumeLabel.attachToComponent(&VolumeSlider, true);
     addAndMakeVisible(volumeLabel);
 
 
+
+    // Frequency slider
     FrequencySlider.setSliderStyle(Slider::LinearBar);
     FrequencySlider.setRange(Range<double>(50.0, 5000.0), 1.0);
     FrequencySlider.setSkewFactorFromMidPoint(500.0);
     FrequencySlider.setTextValueSuffix("Hz");
     FrequencySlider.setColour(Slider::ColourIds::trackColourId, Colours::limegreen);
     FrequencySlider.setColour(Slider::ColourIds::textBoxOutlineColourId, Colours::limegreen);
+    FrequencySlider.setValue(420.0);
     addAndMakeVisible(FrequencySlider);
 
 
@@ -54,9 +62,13 @@ MainComponent::MainComponent()
     FrequencyLabel.attachToComponent(&FrequencySlider, true);
     addAndMakeVisible(FrequencyLabel);
 
+    
+    addAndMakeVisible(Keyboard1);
+
+
 }
 
-MainComponent::~MainComponent()
+MainComponent::~MainComponent() 
 {
     // This shuts down the audio device and clears the audio source.
     shutdownAudio();
@@ -83,9 +95,11 @@ void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRat
 
 
 
-    CurrentSampleRate = sampleRate;
-    updateAngleData();
+    //CurrentSampleRate = sampleRate;
+    //updateAngleData();
 
+    sAudioSource.prepareToPlay(samplesPerBlockExpected, sampleRate);
+    
 
 
 }
@@ -98,33 +112,44 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
 
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
-    //bufferToFill.clearActiveBufferRegion();
+    bufferToFill.clearActiveBufferRegion();
 
-    auto level = (float)VolumeSlider.getValue();
-    auto LevelScale = level * 2.0f;
 
-    for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
-    {
-        auto* buffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
+    sAudioSource.getNextAudioBlock(bufferToFill);
 
-        for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
-        {
-            buffer[sample] = random.nextFloat() * LevelScale - level;
-        }
-    }
+    //level = (float)VolumeSlider.getValue();
+    //auto LevelScale = level * 2.0f;
 
-    auto FreqLevel = (float)FrequencySlider.getValue();
-    auto* LeftBuffer = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
-    auto* RightBuffer = bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+    //for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
+    //{
+    //    auto* buffer = bufferToFill.buffer->getWritePointer(channel, bufferToFill.startSample);
 
-    for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
-    {
-        auto CurrentSample = (float)std::sin(CurrentAngle);
-        CurrentAngle += AngleDelta;
-        LeftBuffer[sample] = CurrentSample * level;
-        RightBuffer[sample] = CurrentSample * level;
+    //    for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+    //    {
+    //        buffer[sample] = random.nextFloat() * LevelScale - level;
+    //    }
+    //}
 
-    }
+
+    //// Freq
+    //auto FreqLevel = (float)FrequencySlider.getValue();
+    //auto* LeftBuffer = bufferToFill.buffer->getWritePointer(0, bufferToFill.startSample);
+    //auto* RightBuffer = bufferToFill.buffer->getWritePointer(1, bufferToFill.startSample);
+
+    //for (auto sample = 0; sample < bufferToFill.numSamples; ++sample)
+    //{
+    //    auto CurrentSample = (float)std::sin(CurrentAngle);
+    //    CurrentAngle += AngleDelta;
+    //    LeftBuffer[sample] = CurrentSample * level;
+    //    RightBuffer[sample] = CurrentSample * level;
+
+    //}
+
+
+
+
+
+
 
 }
 
@@ -134,6 +159,9 @@ void MainComponent::releaseResources()
     // restarted due to a setting change.
 
     // For more details, see the help for AudioProcessor::releaseResources()
+
+    sAudioSource.releaseResources();
+
 }
 
 //==============================================================================
@@ -159,17 +187,18 @@ void MainComponent::resized()
 
 
 
-    FrequencySlider.setBounds(100, 120, 150, 20);
+    //FrequencySlider.setBounds(100, 120, 150, 20);
 
-    FrequencySlider.onValueChange = [this]
-    {
-        if (CurrentSampleRate)
-        {
-            updateAngleData();
-        }
-    };
+    //FrequencySlider.onValueChange = [this]
+    //{
+    //    if (CurrentSampleRate)
+    //    {
+    //        updateAngleData();
+    //    }
+    //};
         
     
+    Keyboard1.setBounds(10, getHeight() - 80 , getWidth() - 20, 70);
 
 }
 

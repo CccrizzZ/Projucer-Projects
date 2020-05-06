@@ -3,11 +3,11 @@
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(91,58): warning C4100: 'index': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(95,63): warning C4100: 'index': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(100,79): warning C4100: 'newName': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginEditor.cpp(64,34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(100,58): warning C4100: 'index': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(105,73): warning C4100: 'samplesPerBlock': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(105,57): warning C4100: 'sampleRate': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginEditor.cpp(83,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(141,89): warning C4100: 'midiMessages': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginProcessor.cpp(168,15): warning C4189: 'channelData': local variable is initialized but not referenced
-C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginEditor.cpp(64,34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Source\PluginEditor.cpp(83,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   NewVSTProject_SharedCode.vcxproj -> C:\Users\ccccr\Desktop\Projucer-Projects\NewVSTProject\Builds\VisualStudio2019\x64\Debug\Shared Code\NewVSTProject.lib

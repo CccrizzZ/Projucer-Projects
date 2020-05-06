@@ -1907,6 +1907,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\SineWaveSound.h"/>
+    <ClInclude Include="..\..\Source\SineWaveVoice.h"/>
+    <ClInclude Include="..\..\Source\SynthAudioSource.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
     <ClInclude Include="D:\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="D:\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
