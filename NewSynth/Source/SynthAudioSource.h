@@ -7,12 +7,14 @@ class SynthAudioSource : public AudioSource
 public:
 	SynthAudioSource(MidiKeyboardState & keyState) : keyboardState(keyState) 
 	{
+		voice = 1;
 
 		for (auto i = 0; i < voice; ++i)
 		{
 			synth.addVoice(new SineWaveVoice());
 		}
 		synth.addSound(new SineWaveSound());
+
 	}
 
 	void setUsingWaveSound()
@@ -35,6 +37,9 @@ public:
 
 		// process incoming midi
 		MidiBuffer incomingMidi;
+
+		midiCollector.removeNextBlockOfMessages(incomingMidi, bufferToFill.numSamples);
+
 		keyboardState.processNextMidiBuffer(
 			incomingMidi, 
 			bufferToFill.startSample, 
@@ -50,6 +55,7 @@ public:
 			bufferToFill.numSamples
 		);
 
+
 	}
 
 	MidiMessageCollector* getMidiCollector()
@@ -58,12 +64,35 @@ public:
 	}
 
 	void releaseResources() override {};
+
+	void setVoice(int newVoice)
+	{
+		
+		synth.clearVoices();
+		synth.clearSounds();
+
+		for (auto i = 0; i <= newVoice; i++)
+		{
+			synth.addVoice(new SineWaveVoice());
+		}
+
+		synth.addSound(new SineWaveSound());
+	}
+
 private:
+	
+	// external midi signal 
 	MidiMessageCollector midiCollector;
 
 
+	// keyboard
 	MidiKeyboardState& keyboardState;
+	
+	// synth
 	Synthesiser synth;
-	int voice = 4;
+	
+	
+	// voice
+	int voice;
 };
 

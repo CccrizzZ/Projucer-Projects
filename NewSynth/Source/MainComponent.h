@@ -49,6 +49,7 @@ private:
     // Volume level
     float level = -18.0f;
 
+    
 
     // random shit
     JUCE_API::Random random;
@@ -61,6 +62,14 @@ private:
     Slider FrequencySlider;
     Label FrequencyLabel;
 
+    // Voice slider and label
+    Slider VoicesSlider;
+    Label VoicesLabel;
+
+
+
+
+
 
     // Sine wave shit
     double CurrentSampleRate = 0.0;
@@ -68,10 +77,24 @@ private:
     double AngleDelta = 0.0;
     void updateAngleData();
     
-    MidiKeyboardState keyboardState;
+
+    // Keyboard
+    MidiKeyboardState keyboardState1;
     MidiKeyboardComponent Keyboard1;
+    
+    // Audio source
     SynthAudioSource sAudioSource;
 
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+    // External midi input
+    ComboBox MidiInputList;
+    Label MidiInputListLabel;
+    int LastInputIndex = 0;
+
+    void setMidiInput(int index);
+
+    AudioDeviceManager deviceManager;
+
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainComponent);
 };

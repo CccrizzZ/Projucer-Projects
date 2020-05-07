@@ -10,8 +10,8 @@
 
 //==============================================================================
 MainComponent::MainComponent() :
-    sAudioSource(keyboardState),
-    Keyboard1(keyboardState, MidiKeyboardComponent::horizontalKeyboard)
+    sAudioSource(keyboardState1),
+    Keyboard1(keyboardState1, MidiKeyboardComponent::horizontalKeyboard)
 {
     // Make sure you set the size of the component after
     // you add any child components.
@@ -47,7 +47,7 @@ MainComponent::MainComponent() :
 
 
 
-    // Frequency slider
+    // Frequency slider and label
     FrequencySlider.setSliderStyle(Slider::LinearBar);
     FrequencySlider.setRange(Range<double>(50.0, 5000.0), 1.0);
     FrequencySlider.setSkewFactorFromMidPoint(500.0);
@@ -57,13 +57,58 @@ MainComponent::MainComponent() :
     FrequencySlider.setValue(420.0);
     addAndMakeVisible(FrequencySlider);
 
-
     FrequencyLabel.setText("Frequency: ", dontSendNotification);
     FrequencyLabel.attachToComponent(&FrequencySlider, true);
     addAndMakeVisible(FrequencyLabel);
 
-    
+    // Voices slider and label
+    VoicesSlider.setRange(Range<double>(1.0, 32.0), 1.0);
+    VoicesSlider.setSliderStyle(Slider::LinearBar);
+    VoicesSlider.setColour(Slider::ColourIds::trackColourId, Colours::limegreen);
+    VoicesSlider.setColour(Slider::ColourIds::textBoxOutlineColourId, Colours::limegreen);
+    //VoicesSlider.setTextValueSuffix("Voice");
+    VoicesSlider.setValue(4.0);
+    addAndMakeVisible(VoicesSlider);
+
+    VoicesLabel.setText("Voices: ", dontSendNotification);
+    VoicesLabel.attachToComponent(&VoicesSlider, true);
+    addAndMakeVisible(VoicesLabel);
+
+    // Keyboard
     addAndMakeVisible(Keyboard1);
+    
+
+    // Midi input
+    auto midiInputs = MidiInput::getDevices();
+    MidiInputList.addItemList(midiInputs, 1);
+
+
+    for (auto midiIn : midiInputs)
+    {
+        if (deviceManager.isMidiInputEnabled(midiIn))
+        {
+            setMidiInput(midiInputs.indexOf(midiIn));
+            break;
+        }
+    }
+
+
+    if (MidiInputList.getSelectedId() == 0)
+    {
+        setMidiInput(0);
+    }
+
+
+    MidiInputList.setTextWhenNoChoicesAvailable("No MIDI Input Detected");
+    addAndMakeVisible(MidiInputList);
+
+    MidiInputListLabel.setText("MIDI Input: ", dontSendNotification);
+    MidiInputListLabel.attachToComponent(&MidiInputList, true);
+    addAndMakeVisible(MidiInputListLabel);
+
+
+
+
 
 
 }
@@ -147,9 +192,7 @@ void MainComponent::getNextAudioBlock (const AudioSourceChannelInfo& bufferToFil
 
 
 
-
-
-
+    
 
 }
 
@@ -162,13 +205,14 @@ void MainComponent::releaseResources()
 
     sAudioSource.releaseResources();
 
+
 }
 
 //==============================================================================
 void MainComponent::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (Colours::black);
+    g.fillAll (Colours::darkgrey);
 
     // You can add your drawing code here!
 }
@@ -178,14 +222,32 @@ void MainComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
-    VolumeSlider.setBounds(100, 40, 150, 20);
+
+
+
+    // Set component position
+    VolumeSlider.setBounds(100, 60, 150, 20);
+    MidiInputList.setBounds(200, 10, getWidth() - 210, 20);
+    Keyboard1.setBounds(10, getHeight() - 80 , getWidth() - 20, 70);
+    VoicesSlider.setBounds(100, 100, 150, 20);
+
+
 
     VolumeSlider.onValueChange = [this]
     {
         level = (float)VolumeSlider.getValue();
     };
 
+    VoicesSlider.onValueChange = [this]
+    {
+        sAudioSource.setVoice((int)VoicesSlider.getValue());
+    };
 
+
+    MidiInputList.onChange = [this]
+    {
+        setMidiInput(MidiInputList.getSelectedItemIndex());
+    };
 
     //FrequencySlider.setBounds(100, 120, 150, 20);
 
@@ -196,9 +258,7 @@ void MainComponent::resized()
     //        updateAngleData();
     //    }
     //};
-        
-    
-    Keyboard1.setBounds(10, getHeight() - 80 , getWidth() - 20, 70);
+
 
 }
 
@@ -207,4 +267,23 @@ void MainComponent::updateAngleData()
     auto CyclesPerSample = FrequencySlider.getValue() / CurrentSampleRate;
     AngleDelta = CyclesPerSample * 2.0 * MathConstants<double>::pi;
 
+}
+
+void MainComponent::setMidiInput(int index)
+{
+    auto list = MidiInput::getDevices();
+
+    // remove previous midi input callback
+    deviceManager.removeMidiInputCallback(list[LastInputIndex], sAudioSource.getMidiCollector());
+
+
+    auto newInput = list[index];
+
+    if (!deviceManager.isMidiInputEnabled(newInput))
+    {
+        deviceManager.setMidiInputEnabled(newInput, true);
+    }
+
+    deviceManager.addMidiInputCallback(newInput, sAudioSource.getMidiCollector());
+    MidiInputList.setSelectedId(index + 1, dontSendNotification);
 }
