@@ -8,6 +8,7 @@ public:
 	SynthAudioSource(MidiKeyboardState & keyState) : keyboardState(keyState) 
 	{
 		voice = 1;
+		level = 5;
 
 		for (auto i = 0; i < voice; ++i)
 		{
@@ -56,6 +57,11 @@ public:
 		);
 
 
+		
+		for (auto channel = 0; channel < bufferToFill.buffer->getNumChannels(); ++channel)
+		{
+			bufferToFill.buffer->applyGain(channel, bufferToFill.startSample, bufferToFill.buffer->getNumSamples(), level);
+		}
 	}
 
 	MidiMessageCollector* getMidiCollector()
@@ -77,6 +83,14 @@ public:
 		}
 
 		synth.addSound(new SineWaveSound());
+		
+	}
+
+
+
+	void setGain(int newGain) 
+	{
+		level = newGain;
 	}
 
 private:
@@ -94,5 +108,10 @@ private:
 	
 	// voice
 	int voice;
+
+	// volume
+	float level;
+	//AudioBuffer<float> level;
+
 };
 

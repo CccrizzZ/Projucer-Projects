@@ -36,9 +36,10 @@ MainComponent::MainComponent() :
 
     // Volume slider and label
     VolumeSlider.setSliderStyle(Slider::LinearBar);
-    VolumeSlider.setRange(Range<double>(0.0, 1.0), 0.01);
+    VolumeSlider.setRange(Range<double>(0.0, 10.0), 0.1);
     VolumeSlider.setColour(Slider::ColourIds::trackColourId, Colours::limegreen);
     VolumeSlider.setColour(Slider::ColourIds::textBoxOutlineColourId, Colours::limegreen);
+    VolumeSlider.setValue(5.0);
     addAndMakeVisible(VolumeSlider);
 
     volumeLabel.setText("Volume: ", dontSendNotification);
@@ -212,7 +213,7 @@ void MainComponent::releaseResources()
 void MainComponent::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (Colours::darkgrey);
+    g.fillAll (Colours::black);
 
     // You can add your drawing code here!
 }
@@ -235,7 +236,7 @@ void MainComponent::resized()
 
     VolumeSlider.onValueChange = [this]
     {
-        level = (float)VolumeSlider.getValue();
+        sAudioSource.setGain((float)VolumeSlider.getValue());
     };
 
     VoicesSlider.onValueChange = [this]

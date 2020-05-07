@@ -2,4 +2,6 @@
 C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(56,27): warning C4100: 'newPitchWheelValue': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(58,49): warning C4100: 'newControllerValue': unreferenced formal parameter
 C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SineWaveVoice.h(58,27): warning C4100: 'controllerNumber': unreferenced formal parameter
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\SynthAudioSource.h(93,11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Source\MainComponent.cpp(239,58): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   NewSynth_App.vcxproj -> C:\Users\ccccr\Desktop\Projucer-Projects\NewSynth\Builds\VisualStudio2019\x64\Debug\App\NewSynth.exe
